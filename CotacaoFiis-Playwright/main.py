@@ -1,4 +1,6 @@
+from datetime import date
 import time
+import datetime
 import ListaDeAtivos
 from playwright.sync_api import sync_playwright
 
@@ -8,6 +10,8 @@ listaAtivosError = []
 with sync_playwright() as p:
     navegador = p.chromium.launch(headless=False)
     pagina = navegador.new_page()
+    horaInicio = datetime.datetime.now()
+    print('Hora:', horaInicio)
     for i in ListaDeAtivos.vetorAtivos:
         link = 'https://fiis.com.br/' + i + '/'
         print('Acessando:', link)
@@ -22,7 +26,7 @@ with sync_playwright() as p:
         except:
             contError += 1
             listaAtivosError.append(i)
-            print('\nOcorreu um erro! Ativo', i, 'mudou de nome ou nao existe mais!')
+            print('\n\033[31mOcorreu um erro! Ativo', i, 'mudou de nome, nao existe mais ou pagina demorou para responder!\033[m\n')
         else:
             if dividendYield == '0,00%':
                 print("Próximo ativo...")
@@ -30,14 +34,16 @@ with sync_playwright() as p:
                 dados = dados.split()
                 linhas = int(len(dados) / 7)
                 print(contAtivos, i, ':R$', valorAtivo, 'DY', dividendYield)
-                print('dados:', dados)
+                #print('dados:', dados)
                 print('linhas:', linhas)
             else:
                 print('O ativo nao existe!')
 
         contAtivos += 1
 
-    time.sleep(5)
+    time.sleep(10)
 
-print(listaAtivosError)
-print('Ativos com erros:', contError)
+horaFim = horaInicio - datetime.datetime.now()
+print('Tempo de execução:', horaFim)
+print('\nLista de ativos com erros:', listaAtivosError)
+print('\nAtivos com erros:', contError)

@@ -429,3 +429,4 @@ vetorAtivos = [
     'YUFI11',
     'ZIFI11',
 ]
+
