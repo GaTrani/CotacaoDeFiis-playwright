@@ -10,8 +10,9 @@ with sync_playwright() as p:
     pagina = navegador.new_page()
     for i in ListaDeAtivos.vetorAtivos:
         link = 'https://fiis.com.br/' + i + '/'
-        pagina.goto(link)
+        print('Acessando:', link)
         try:
+            pagina.goto(link, timeout=10000)
             valorAtivo = pagina.locator('xpath=//*[@id="quotations--infos-wrapper"]/div[1]/span[2]')\
                 .text_content(timeout=4000)
             dividendYield = pagina.locator('xpath=//*[@id="informations--indexes"]/td[1]/h3[1]')\
