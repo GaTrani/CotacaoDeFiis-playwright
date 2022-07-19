@@ -4,16 +4,17 @@ import sqlite3
 database = sqlite3.connect('BancoDadosFii.db')
 c = database.cursor()
 
-database.execute(''' CREATE TABLE IF NOT EXISTS BDFii(
-                        ATIVO VARCHAR(7),
-                        DATABA INT NOT NULL,
-                        DATAPAGTO INT NOT NULL,
-                        COTA FLOAT NOT NULL,
-                        PERCENT FLOAT NOT NULL,
-                        DIVIDENDO FLOAT NOT NULL) 
-                        ''')
-#APRLICA AS ALTERAÇOES NA TABELA
-database.commit()
+def criarTabela():
+    database.execute(''' CREATE TABLE IF NOT EXISTS BDFii(
+                            ATIVO VARCHAR(7),
+                            DATABA INT NOT NULL,
+                            DATAPAGTO INT NOT NULL,
+                            COTA FLOAT NOT NULL,
+                            PERCENT FLOAT NOT NULL,
+                            DIVIDENDO FLOAT NOT NULL) 
+                            ''')
+    # APRLICA AS ALTERAÇOES NA TABELA
+    database.commit()
 
 def inserirat(ATIVO, DATABA, DATAPAGTO, COTA, PERCENT, DIVIDENDO):
     c.execute(''' INSERT into BDFii(ATIVO, DATABA, DATAPAGTO, COTA, PERCENT, DIVIDENDO) VALUES(?, ?, ?, ?, ?, ?)''',
