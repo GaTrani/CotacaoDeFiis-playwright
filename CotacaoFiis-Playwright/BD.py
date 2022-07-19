@@ -1,5 +1,6 @@
 import sqlite3
 
+
 #CRIAR DATABASE
 database = sqlite3.connect('BancoDadosFii.db')
 c = database.cursor()
